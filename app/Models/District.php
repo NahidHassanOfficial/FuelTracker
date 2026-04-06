@@ -1,0 +1,40 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+
+class District extends Model
+{
+    public $timestamps = false;
+
+    protected $fillable = [
+        'division_id',
+        'name',
+        'status',
+    ];
+
+    protected function casts(): array
+    {
+        return [
+            'status' => 'boolean',
+        ];
+    }
+
+    public function division(): BelongsTo
+    {
+        return $this->belongsTo(Division::class);
+    }
+
+    public function upazilas(): HasMany
+    {
+        return $this->hasMany(Upazila::class);
+    }
+
+    public function fuelStations(): HasMany
+    {
+        return $this->hasMany(FuelStation::class);
+    }
+}

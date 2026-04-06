@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\FuelStation;
 use App\Models\User;
 
 return [
@@ -42,6 +43,10 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
+        'station' => [
+            'driver' => 'session',
+            'provider' => 'fuel_stations',
+        ],
     ],
 
     /*
@@ -65,6 +70,11 @@ return [
         'users' => [
             'driver' => 'eloquent',
             'model' => env('AUTH_MODEL', User::class),
+        ],
+
+        'fuel_stations' => [
+            'driver' => 'eloquent',
+            'model' => env('AUTH_FUEL_STATION_MODEL', FuelStation::class),
         ],
 
         // 'users' => [
