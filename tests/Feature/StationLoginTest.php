@@ -1,7 +1,7 @@
 <?php
 
-use App\Enums\Enums\StatusEnum;
-use App\Enums\Enums\VerifiedEnum;
+use App\Enums\StatusEnum;
+use App\Enums\VerifiedEnum;
 use App\Models\FuelStation;
 use Database\Seeders\DistrictSeeder;
 use Database\Seeders\DivisionSeeder;
@@ -27,15 +27,15 @@ test('station login page loads', function () {
 test('station can login with valid credentials', function () {
     // Create a station user
     $station = FuelStation::factory()->create([
-        'phone' => fake()->unique()->numerify('01#########'), // generate a valid phone number
-        'password' => 'secret123',
-        'status' => StatusEnum::ACTIVE->value,
+        'phone'       => fake()->unique()->numerify('01#########'), // generate a valid phone number
+        'password'    => 'secret123',
+        'status'      => StatusEnum::ACTIVE->value,
         'is_verified' => VerifiedEnum::VERIFIED->value,
     ]);
 
     // POST login request
     $response = $this->post(route('station.login.post'), [
-        'phone' => $station->phone,
+        'phone'    => $station->phone,
         'password' => 'secret123',
     ]);
 
@@ -45,14 +45,14 @@ test('station can login with valid credentials', function () {
 
 test('station login fails with invalid credentials', function () {
     $station = FuelStation::factory()->create([
-        'phone' => '01712345678',
-        'password' => Hash::make('secret123'),
-        'status' => StatusEnum::ACTIVE->value,
+        'phone'       => '01712345678',
+        'password'    => Hash::make('secret123'),
+        'status'      => StatusEnum::ACTIVE->value,
         'is_verified' => VerifiedEnum::VERIFIED->value,
     ]);
 
     $response = $this->post(route('station.login.post'), [
-        'phone' => $station->phone,
+        'phone'    => $station->phone,
         'password' => 'wrongpassword',
     ]);
 
@@ -62,7 +62,7 @@ test('station login fails with invalid credentials', function () {
 
 test('station login fails with invalid phone format', function () {
     $response = $this->post(route('station.login.post'), [
-        'phone' => 'invalidphone',
+        'phone'    => 'invalidphone',
         'password' => 'secret123',
     ]);
 
@@ -72,7 +72,7 @@ test('station login fails with invalid phone format', function () {
 
 test('station login fails with short password', function () {
     $response = $this->post(route('station.login.post'), [
-        'phone' => '01712345678',
+        'phone'    => '01712345678',
         'password' => 'sho', // less than 4 characters
     ]);
 
@@ -82,13 +82,13 @@ test('station login fails with short password', function () {
 
 test('station login fails if not verified or inactive', function () {
     $station = FuelStation::factory()->create([
-        'phone' => '01712345678',
-        'password' => Hash::make('secret123'),
-        'status' => StatusEnum::INACTIVE->value,
+        'phone'       => '01712345678',
+        'password'    => Hash::make('secret123'),
+        'status'      => StatusEnum::INACTIVE->value,
         'is_verified' => VerifiedEnum::UNVERIFIED->value,
     ]);
     $response = $this->post(route('station.login.post'), [
-        'phone' => $station->phone,
+        'phone'    => $station->phone,
         'password' => 'secret123',
     ]);
     $response->assertSessionHasErrors('error');

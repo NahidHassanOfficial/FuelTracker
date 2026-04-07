@@ -11,7 +11,7 @@ import {
     faEye,
     faEyeSlash,
     faArrowRight,
-    faExclamationCircle,
+    faCircleExclamation,
     faSpinner
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
@@ -105,7 +105,7 @@ const submit = () => {
                     <form @submit.prevent="submit" class="glass-card-strong p-8 sm:p-10 space-y-6">
                         <div v-if="form.errors.error"
                             class="p-4 rounded-xl bg-rose-50 border border-rose-100 text-rose-600 text-sm font-medium slide-up flex items-center gap-2">
-                            <font-awesome-icon :icon="faExclamationCircle" class="text-rose-500" />
+                            <font-awesome-icon :icon="faCircleExclamation" class="text-rose-500" />
                             {{ form.errors.error }}
                         </div>
 
@@ -180,8 +180,8 @@ const submit = () => {
 
                         <p class="text-center text-sm font-semibold text-slate-500 pt-2">
                             Don't have an account?
-                            <button type="button"
-                                class="text-blue-600 hover:text-blue-700 transition-colors ml-1">Register now</button>
+                            <Link :href="route('station.register.view')"
+                                class="text-blue-600 hover:text-blue-700 transition-colors ml-1">Register now</Link>
                         </p>
                     </form>
                 </div>
